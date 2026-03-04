@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam Streumer | Data Scientist</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">SS</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="Sam_Streumer_Resume.pdf" class="resume-btn" target="_blank" rel="noopener noreferrer">Resume</a></li>
+            </ul>
+            <!-- Mobile menu button -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="Sam_Streumer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <p class="hero-intro">Hi, my name is</p>
+                <h1>Sam Streumer.</h1>
+                <p class="hero-description">
+                    Data Science & AI student at Saxion with hands-on experience in predictive maintenance, 
+                    energy forecasting, and NLP. Currently seeking a third-year internship focused on 
+                    machine learning and AI engineering.
+                </p>
+                <a href="#projects" class="cta-button">Check out my work!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-num="01.">About Me</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text-centered">
+                    <p>
+                        I'm a second-year Applied Data Science & AI Engineering student at Saxion. 
+                        I got into this field because I wanted to actually understand how models learn, 
+                        not just throw data at them and hope for the best.
+                    </p>
+                    <p>
+                        Most of my experience comes from real projects. I interned at Scania's truck factory 
+                        in Zwolle for seven months, doing predictive maintenance research through Saxion's 
+                        <a href="https://www.saxion.nl/onderzoek/lectoraten/ambient-intelligence" target="_blank" rel="noopener noreferrer">Lectoraat Ambient Intelligence</a>. 
+                        After that I worked on energy forecasting for an EU sustainability project, NLP for 
+                        the Dutch Land Registry, and right now I'm building computer vision models for the Politieacademie.
+                    </p>
+                    <p>
+                        I also sit on the study program committee at Saxion and work part-time as a 
+                        lifeguard and receptionist at SRO.
+                    </p>
+                    <p>Here are some technologies I work with:</p>
+                    <ul class="skills-list">
+                        <li>Python</li>
+                        <li>PyTorch / TensorFlow</li>
+                        <li>Scikit-learn</li>
+                        <li>SQL</li>
+                        <li>Pandas & NumPy</li>
+                        <li>Streamlit / FastAPI</li>
+                        <li>XGBoost / LSTM</li>
+                        <li>NLP (BERT, TF-IDF)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-num="02.">Where I've Worked & Learned</h2>
+            </div>
+            <div class="experience-content">
+                <!-- Tab Navigation -->
+                <div class="exp-tabs">
+                    <button class="exp-tab active" onclick="showExpTab(0)">Work</button>
+                    <button class="exp-tab" onclick="showExpTab(1)">Education</button>
+                </div>
+                
+                <!-- Tab Panels -->
+                <div class="exp-panels">
+                    <!-- Work Panel -->
+                    <div class="exp-panel active" id="exp-panel-0">
+                        <div class="experience-timeline">
+                            <!-- Scania Internship -->
+                            <a href="https://www.saxion.nl/onderzoek/lectoraten/ambient-intelligence" target="_blank" rel="noopener noreferrer" class="experience-card-link">
+                                <div class="experience-card">
+                                    <div class="exp-date">DEC 2024 — JULY 2025</div>
+                                    <div class="exp-content">
+                                        <h3 class="exp-title">
+                                            Data Driven Team Intern • 
+                                            <span class="exp-company">Scania Zwolle <i class="fas fa-external-link-alt"></i></span>
+                                        </h3>
+                                        <p class="exp-description">
+                                            Worked within the Saxion Lectoraat Ambient Intelligence research group, 
+                                            stationed at Scania's truck production facility in Zwolle. Supported 
+                                            data-driven predictive maintenance research for the carrier systems that 
+                                            transport truck assemblies through the production hall. Created 50+ data 
+                                            visualizations using Python and Streamlit, and built interactive dashboards 
+                                            to help the team explore and present operational sensor data.
+                                        </p>
+                                        <div class="exp-tech">
+                                            <span>Python</span>
+                                            <span>Streamlit</span>
+                                            <span>Pandas</span>
+                                            <span>Data Visualization</span>
+                                            <span>Predictive Maintenance</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- SRO Position -->
+                            <div class="experience-card no-link">
+                                <div class="exp-date">JUNE 2024 — PRESENT</div>
+                                <div class="exp-content">
+                                    <h3 class="exp-title">
+                                        Receptionist & Lifeguard • 
+                                        <span class="exp-company">SRO</span>
+                                    </h3>
+                                    <p class="exp-description">
+                                        Front desk and poolside safety at a public swimming facility. Part-time alongside studies.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Study Program Committee -->
+                            <div class="experience-card no-link">
+                                <div class="exp-date">OCT 2025 — PRESENT</div>
+                                <div class="exp-content">
+                                    <h3 class="exp-title">
+                                        Study Program Committee Member • 
+                                        <span class="exp-company">Saxion University</span>
+                                    </h3>
+                                    <p class="exp-description">
+                                        Part-time role helping improve the Applied Data Science & AI Engineering program. 
+                                        The study was brand new when I started, so there's a lot to shape. I bring the 
+                                        student perspective on curriculum, workload, and how things actually land in practice.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Kloek -->
+                            <div class="experience-card no-link">
+                                <div class="exp-date">JAN 2022 — MARCH 2023</div>
+                                <div class="exp-content">
+                                    <h3 class="exp-title">
+                                        Delivery Driver & Dishwasher • 
+                                        <span class="exp-company">Restaurant Kloek</span>
+                                    </h3>
+                                    <p class="exp-description">
+                                        Deliveries and kitchen work for 14 months.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education Panel -->
+                    <div class="exp-panel" id="exp-panel-1">
+                        <div class="experience-timeline">
+                            <a href="https://www.saxion.edu" target="_blank" rel="noopener noreferrer" class="experience-card-link">
+                                <div class="experience-card">
+                                    <div class="exp-date">SEPT 2023 — PRESENT</div>
+                                    <div class="exp-content">
+                                        <h3 class="exp-title">
+                                            Applied Data Science & AI Engineering • 
+                                            <span class="exp-company">Saxion University <i class="fas fa-external-link-alt"></i></span>
+                                        </h3>
+                                        <p class="exp-description">
+                                            HBO Bachelor's degree (4-year program), currently in second year. 
+                                            Coursework includes Machine Learning, Time Series Forecasting, 
+                                            NLP, Computer Vision, Statistics, Linear Algebra, and Calculus. 
+                                            Completed multiple applied projects for real clients including the 
+                                            Dutch Land Registry (Kadaster), EU H2020 SERENE project, and Politieacademie.
+                                        </p>
+                                        <div class="exp-highlights">
+                                            <div class="highlight-item">
+                                                <i class="fas fa-users"></i>
+                                                <span>Study Program Committee Member</span>
+                                            </div>
+                                        </div>
+                                        <div class="exp-tech">
+                                            <span>Machine Learning</span>
+                                            <span>Python</span>
+                                            <span>Statistics</span>
+                                            <span>SQL</span>
+                                            <span>NLP</span>
+                                            <span>Computer Vision</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- View Full Resume Button -->
+            <div class="view-more-container">
+                <a href="Sam_Streumer_Resume.pdf" target="_blank" rel="noopener noreferrer" class="view-more-btn">
+                    View Full Resume <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-num="03.">Some Things I've Built</h2>
+            </div>
+            <div class="projects-grid">
+                
+                <!-- Project 1: Drawing Recognition -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Drawing Recognition AI</h3>
+                    <p class="project-description">
+                        Real-time sketch recognition that predicts what you're drawing as you 
+                        draw it. 10 categories, live confidence scores — working on bringing 
+                        it to the browser.
+                    </p>
+                    <ul class="project-tech">
+                        <li>Python</li>
+                        <li>Neural Networks</li>
+                        <li>Linear Algebra</li>
+                    </ul>
+                </div>
+
+                <!-- Project 2: SERENE -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-solar-panel"></i>
+                        </div>
+                    </div>
+                    <h3 class="project-title">SERENE Energy Forecasting</h3>
+                    <p class="project-description">
+                        Predicting energy generation and consumption for a sustainable 
+                        community as part of an EU-funded research project. Four models 
+                        compared, full-stack dashboard deployed.
+                    </p>
+                    <ul class="project-tech">
+                        <li>XGBoost</li>
+                        <li>LSTM</li>
+                        <li>FastAPI</li>
+                        <li>Streamlit</li>
+                    </ul>
+                </div>
+
+                <!-- Project 3: Kadaster -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Kadaster Rechtsfeiten Challenge</h3>
+                    <p class="project-description">
+                        Automating legal fact recognition in nearly 20,000 Dutch notarial 
+                        deeds for the Land Registry. NLP pipeline built under strict 
+                        privacy constraints.
+                    </p>
+                    <ul class="project-tech">
+                        <li>Dutch BERT</li>
+                        <li>TF-IDF</li>
+                        <li>NLP</li>
+                        <li>Scikit-learn</li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- View Full Project Archive Button -->
+            <div class="view-more-container">
+                <a href="archive.html" class="view-more-btn">
+                    View Full Project Archive <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>
+                I'm currently looking for a third-year internship (starting September 2026) focused on 
+                AI, machine learning, or data engineering. If you have an opportunity or just want to 
+                connect, feel free to reach out.
+            </p>
+            <a href="/cdn-cgi/l/email-protection#0a796b6724797e786f7f676f784a6d676b636624696567" class="cta-button">Say Hello</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built by Sam Streumer</p>
+    </footer>
+
+    <!-- Fixed Social Links -->
+    <div class="social-links">
+        <a href="https://github.com/SamStreumer" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/samstreumer" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </div>
+
+    <div class="email-link">
+        <a href="/cdn-cgi/l/email-protection#91e2f0fcbfe2e5e3f4e4fcf4e3d1f6fcf0f8fdbff2fefc"><span class="__cf_email__" data-cfemail="196a78743

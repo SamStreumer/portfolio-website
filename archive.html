@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Sam Streumer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0a192f;
+            --bg-secondary: #112240;
+            --text-primary: #ccd6f6;
+            --text-secondary: #8892b0;
+            --text-accent: #64ffda;
+            --navy-shadow: rgba(2, 12, 27, 0.7);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 5px; }
+
+        /* ─── Nav ─── */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 20px 50px;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        nav.scrolled { padding: 15px 50px; box-shadow: 0 10px 30px -10px var(--navy-shadow); }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--text-accent); text-decoration: none; transition: all 0.3s ease; }
+        .logo:hover { transform: scale(1.05); }
+        .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 14px; transition: color 0.3s ease; position: relative; }
+        .nav-links a:hover { color: var(--text-accent); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--text-accent); transition: width 0.3s ease; }
+        .nav-links a:hover::after { width: 100%; }
+        .resume-btn { border: 1px solid var(--text-accent); padding: 10px 20px; border-radius: 5px; color: var(--text-accent) !important; transition: all 0.3s ease; }
+        .resume-btn:hover { background: rgba(100, 255, 218, 0.1); transform: translateY(-2px); }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; }
+        .hamburger span { width: 25px; height: 2px; background: var(--text-accent); margin: 3px 0; transition: 0.3s; }
+        .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+        .mobile-menu { position: fixed; top: -100%; left: 0; width: 100%; height: 100vh; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; transition: 0.3s; z-index: 999; }
+        .mobile-menu.active { top: 0; }
+        .mobile-menu ul { list-style: none; text-align: center; }
+        .mobile-menu ul li { margin: 20px 0; }
+        .mobile-menu ul li a { color: var(--text-primary); text-decoration: none; font-size: 24px; }
+
+        /* ─── Layout ─── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 50px; }
+
+        /* ─── Header ─── */
+        .archive-header {
+            padding-top: 150px;
+            padding-bottom: 20px;
+            animation: fadeInUp 0.6s ease;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 10px;
+            color: var(--text-accent); text-decoration: none;
+            font-size: 14px; font-family: 'Courier New', monospace;
+            margin-bottom: 30px; transition: all 0.3s ease;
+        }
+        .back-link:hover { transform: translateX(-5px); }
+        .archive-header h1 {
+            font-size: clamp(40px, 6vw, 64px);
+            color: var(--text-primary); font-weight: 700;
+            line-height: 1.1; margin-bottom: 16px;
+        }
+        .archive-header p {
+            font-size: 18px; max-width: 600px; line-height: 1.7;
+        }
+
+        /* ─── Featured Projects (image left, text right) ─── */
+        .featured-projects { padding: 80px 0 60px; }
+
+        .featured-label {
+            color: var(--text-accent);
+            font-family: 'Courier New', monospace;
+            font-size: 14px; letter-spacing: 2px;
+            text-transform: uppercase; margin-bottom: 60px;
+        }
+
+        .featured-item {
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .featured-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .featured-item:nth-child(2) {
+            transition-delay: 0.15s;
+        }
+
+        /* Image thumbnail */
+        .featured-thumb {
+            flex-shrink: 0;
+            width: 340px;
+            aspect-ratio: 16 / 10;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-secondary);
+            box-shadow: 0 10px 30px -15px var(--navy-shadow);
+            transition: transform 0.4s ease;
+        }
+        .featured-item:hover .featured-thumb {
+            transform: translateY(-4px);
+        }
+        .featured-thumb::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.07), rgba(10, 25, 47, 0.35));
+            z-index: 2; pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .featured-item:hover .featured-thumb::before { opacity: 0; }
+        .featured-thumb img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .featured-item:hover .featured-thumb img { transform: scale(1.03); }
+
+        /* Placeholder */
+        .thumb-placeholder {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(100, 255, 218, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(100, 255, 218, 0.04) 0%, transparent 50%),
+                var(--bg-secondary);
+            position: relative;
+        }
+        .thumb-placeholder::after {
+            content: ''; position: absolute; inset: 0;
+            background:
+                repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(100, 255, 218, 0.02) 30px, rgba(100, 255, 218, 0.02) 31px),
+                repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(100, 255, 218, 0.02) 30px, rgba(100, 255, 218, 0.02) 31px);
+        }
+        .thumb-placeholder i {
+            font-size: 40px; color: var(--text-accent); opacity: 0.25; z-index: 1;
+        }
+
+        /* Text side */
+        .featured-text { flex: 1; padding-top: 4px; }
+
+        .featured-overline {
+            display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace; font-size: 13px;
+            color: var(--text-accent);
+        }
+        .tag {
+            padding: 3px 10px; border-radius: 3px;
+            font-size: 11px; font-family: 'Courier New', monospace;
+        }
+        .tag-client {
+            background: rgba(100, 255, 218, 0.08); color: var(--text-accent);
+        }
+        .tag-wip {
+            background: rgba(255, 183, 77, 0.12); color: #ffb74d;
+            border: 1px solid rgba(255, 183, 77, 0.25);
+        }
+
+        .featured-text h3 {
+            font-size: 24px; color: var(--text-primary);
+            font-weight: 600; margin-bottom: 16px;
+        }
+        .featured-text p {
+            font-size: 16px; line-height: 1.8; margin-bottom: 20px;
+        }
+
+        /* Metrics */
+        .metrics {
+            display: flex; gap: 24px; flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .metric { display: flex; flex-direction: column; gap: 2px; }
+        .metric-val {
+            font-family: 'Courier New', monospace;
+            font-size: 18px; color: var(--text-accent); font-weight: 700;
+        }
+        .metric-lbl {
+            font-size: 11px; color: var(--text-secondary);
+            opacity: 0.8; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* Tech pills for featured */
+        .featured-tech {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            list-style: none;
+        }
+        .featured-tech li {
+            background: rgba(100, 255, 218, 0.08);
+            padding: 4px 14px; border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px; color: var(--text-accent);
+        }
+
+        /* ─── Other Projects Table ─── */
+        .other-section { padding: 40px 0 120px; }
+
+        .other-heading {
+            color: var(--text-primary); font-size: 28px;
+            font-weight: 600; margin-bottom: 40px;
+        }
+
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .projects-table thead th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(136, 146, 176, 0.15);
+        }
+
+        .projects-table tbody tr {
+            transition: background 0.2s ease;
+        }
+        .projects-table tbody tr:hover {
+            background: rgba(100, 255, 218, 0.03);
+        }
+
+        .projects-table td {
+            padding: 20px 16px;
+            vertical-align: top;
+            border-bottom: 1px solid rgba(136, 146, 176, 0.07);
+        }
+
+        .table-year {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--text-accent);
+            white-space: nowrap;
+        }
+
+        .table-project {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .table-context {
+            font-size: 14px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .table-tech {
+            display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .table-tech span {
+            background: rgba(100, 255, 218, 0.08);
+            padding: 3px 12px; border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px; color: var(--text-accent);
+            white-space: nowrap;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            text-align: center; padding: 50px 0;
+            color: var(--text-secondary); font-size: 14px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ─── Social ─── */
+        .social-links {
+            position: fixed; bottom: 0; left: 50px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 20px;
+        }
+        .social-links::after { content: ''; width: 1px; height: 100px; background: var(--text-secondary); }
+        .social-links a { color: var(--text-secondary); font-size: 22px; transition: all 0.3s ease; text-decoration: none; }
+        .social-links a:hover { color: var(--text-accent); transform: translateY(-5px); }
+        .email-link {
+            position: fixed; bottom: 0; right: 50px;
+            display: flex; flex-direction: column;
+            align-items: center; gap: 20px;
+        }
+        .email-link::after { content: ''; width: 1px; height: 100px; background: var(--text-secondary); }
+        .email-link a {
+            color: var(--text-secondary); text-decoration: none;
+            font-size: 13px; font-family: 'Courier New', monospace;
+            letter-spacing: 1px; writing-mode: vertical-rl;
+            transition: all 0.3s ease;
+        }
+        .email-link a:hover { color: var(--text-accent); transform: translateY(-5px); }
+
+        /* ─── Animations ─── */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 900px) {
+            .featured-item {
+                flex-direction: column;
+                gap: 24px;
+                margin-bottom: 70px;
+            }
+            .featured-thumb { width: 100%; max-width: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 25px; }
+            nav { padding: 15px 25px; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .archive-header { padding-top: 120px; }
+            .archive-header h1 { font-size: 36px; }
+            .social-links, .email-link { display: none; }
+
+            /* Table responsive */
+            .projects-table thead { display: none; }
+            .projects-table, .projects-table tbody, .projects-table tr, .projects-table td {
+                display: block; width: 100%;
+            }
+            .projects-table tr {
+                padding: 20px 0;
+                border-bottom: 1px solid rgba(136, 146, 176, 0.07);
+            }
+            .projects-table td {
+                padding: 4px 0;
+                border: none;
+            }
+            .table-year { margin-bottom: 4px; }
+            .table-project { font-size: 18px; margin-bottom: 4px; }
+            .table-context { margin-bottom: 8px; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">SS</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#experience">Experience</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="Sam_Streumer_Resume.pdf" class="resume-btn" target="_blank" rel="noopener noreferrer">Resume</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#experience">Experience</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="Sam_Streumer_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
+        </ul>
+    </div>
+
+    <!-- Header -->
+    <div class="container">
+        <div class="archive-header">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Sam Streumer
+            </a>
+            <h1>All Projects</h1>
+            <p>Data science and AI projects I've worked on — from school work to personal experiments.</p>
+            <p style="font-size: 14px; color: var(--text-secondary); opacity: 0.7; margin-top: 12px; font-family: 'Courier New', monospace;">
+                Note: Some project code cannot be shared publicly due to NDA agreements.
+            </p>
+        </div>
+    </div>
+
+    <!-- Featured Projects -->
+    <div class="container">
+        <section class="featured-projects">
+            <p class="featured-label">Featured Projects</p>
+
+            <!-- NarcoIntel -->
+            <div class="featured-item">
+                <div class="featured-thumb">
+                    <!-- Replace with: <img src="assets/narcointel.png" alt="NarcoIntel dashboard"> -->
+                    <div class="thumb-placeholder">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                </div>
+                <div class="featured-text">
+                    <div class="featured-overline">
+                        Featured Project
+                        <span class="tag tag-client">Politieacademie</span>
+                        <span class="tag tag-wip">In Progress</span>
+                    </div>
+                    <h3>NarcoIntel — Suspicious Activities Detection</h3>
+                    <p>
+                        Computer vision pipeline that detects IBC containers, barrels, and jerry cans in 
+                        very-high-resolution satellite and aerial imagery — linked to illegal chemical waste 
+                        dumping across the Netherlands. Automated image retrieval from Satellietdataportaal 
+                        and PDOK APIs, with an interactive dashboard featuring human-in-the-loop feedback.
+                    </p>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-val">VHR</span>
+                            <span class="metric-lbl">Satellite Imagery</span>
+                        </div>
+                    </div>
+                    <ul class="featured-tech">
+                        <li>Computer Vision</li>
+                        <li>Object Detection</li>
+                        <li>Geospatial APIs</li>
+                        <li>Python</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Drawing Recognition -->
+            <a href="quickdraw.html" style="text-decoration: none; color: inherit;">
+            <div class="featured-item">
+                <div class="featured-thumb">
+                    <!-- Replace with: <img src="assets/drawing-ai.png" alt="Drawing Recognition AI"> -->
+                    <div class="thumb-placeholder">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                </div>
+                <div class="featured-text">
+                    <div class="featured-overline">
+                        Featured Project
+                        <span class="tag tag-client">Personal</span>
+                        <span class="tag" style="background: rgba(100, 255, 218, 0.12); color: var(--text-accent); border: 1px solid rgba(100, 255, 218, 0.25);">Live Demo</span>
+                    </div>
+                    <h3>Drawing Recognition AI</h3>
+                    <p>
+                        A program that guesses what you're drawing in real-time, displaying 
+                        confidence percentages as you sketch. Built entirely from scratch with 
+                        NumPy — no deep learning frameworks. Try it live in the browser, or 
+                        check out the source code.
+                    </p>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="metric-val">10</span>
+                            <span class="metric-lbl">Categories</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val">Real-time</span>
+                            <span class="metric-lbl">Inference</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-val">0</span>
+                            <span class="metric-lbl">Frameworks</span>
+                        </div>
+                    </div>
+                    <ul class="featured-tech">
+                        <li>Python</li>
+                        <li>Neural Networks</li>
+                        <li>Linear Algebra</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+            </div>
+            </a>
+
+        </section>
+    </div>
+
+    <!-- Other Projects Table -->
+    <div class="container">
+        <section class="other-section">
+            <h3 class="other-heading">Other Noteworthy Projects</h3>
+            <table class="projects-table">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">Year</th>
+                        <th>Project</th>
+                        <th style="width: 120px;">Context</th>
+                        <th>Built with</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table-year">2026</td>
+                        <td class="table-project">Portfolio Website</td>
+                        <td class="table-context">Personal</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>JavaScript</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-year">2025</td>
+                        <td class="table-project">SERENE — Energy Forecasting</td>
+                        <td class="table-context">School · EU H2020</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>XGBoost</span>
+                                <span>LSTM</span>
+                                <span>FastAPI</span>
+                                <span>Streamlit</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-year">2025</td>
+                        <td class="table-project">Car Price Prediction — MLOps Pipeline</td>
+                        <td class="table-context">School</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>DVC</span>
+                                <span>MLflow</span>
+                                <span>MinIO</span>
+                                <span>FastAPI</span>
+                                <span>Streamlit</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-year">2025</td>
+                        <td class="table-project">Kadaster Rechtsfeiten Challenge</td>
+                        <td class="table-context">School · Kadaster</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>Dutch BERT</span>
+                                <span>TF-IDF</span>
+                                <span>Scikit-learn</span>
+                                <span>NLP</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-year">2024</td>
+                        <td class="table-project">NS Train Departure Display</td>
+                        <td class="table-context">Personal</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>Python</span>
+                                <span>NS API</span>
+                                <span>GUI</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table-year">2024</td>
+                        <td class="table-project">Goudappel — Traffic & Mobility Analysis</td>
+                        <td class="table-context">School · Goudappel</td>
+                        <td>
+                            <div class="table-tech">
+                                <span>Python</span>
+                                <span>Data Analysis</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Built by Sam Streumer</p>
+    </footer>
+
+    <!-- Social -->
+    <div class="social-links">
+        <a href="https://github.com/SamStreumer" title="GitHub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/samstreumer" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <div class="email-link">
+        <a href="/cdn-cgi/l/email-protection#9be8faf6b5e8efe9feeef6fee9dbfcf6faf2f7b5f8f4f6"><span class="__cf_email__" data-cfemail="fc8f9d91d28f888e998991998ebc9b919d9590d29f9391">[email&#160;protected]</span></a>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 100);
+        });
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        }));
+
+        // Scroll reveal for featured items
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.featured-item').forEach(item => obs.observe(item));
+    </script>
+</body>
+</html>
