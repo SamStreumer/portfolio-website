@@ -87,6 +87,23 @@ window.addEventListener('load', function() {
     document.body.style.opacity = '1';
 });
 
+// Mouse spotlight effect
+const spotlight = document.createElement('div');
+spotlight.classList.add('spotlight');
+document.body.appendChild(spotlight);
+
+document.addEventListener('mousemove', function(e) {
+    spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
+    spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
+    if (!spotlight.classList.contains('active')) {
+        spotlight.classList.add('active');
+    }
+});
+
+document.addEventListener('mouseleave', function() {
+    spotlight.classList.remove('active');
+});
+
 // Typed effect for hero intro
 const heroIntro = document.querySelector('.hero-intro');
 if (heroIntro) {

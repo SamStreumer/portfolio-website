@@ -27,6 +27,27 @@
             overflow-x: hidden;
         }
 
+        /* Mouse spotlight */
+        .spotlight {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(100, 255, 218, 0.06),
+                transparent 40%
+            );
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .spotlight.active { opacity: 1; }
+        nav, section, .featured-projects, .other-section, footer, .social-links, .email-link, .mobile-menu, .archive-header {
+            position: relative;
+            z-index: 2;
+        }
+
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 5px; }
@@ -444,7 +465,7 @@
             </div>
 
             <!-- Drawing Recognition -->
-            <a href="quickdraw.html" style="text-decoration: none; color: inherit;">
+            <a href="https://github.com/SamStreumer" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
             <div class="featured-item">
                 <div class="featured-thumb">
                     <!-- Replace with: <img src="assets/drawing-ai.png" alt="Drawing Recognition AI"> -->
@@ -456,14 +477,13 @@
                     <div class="featured-overline">
                         Featured Project
                         <span class="tag tag-client">Personal</span>
-                        <span class="tag" style="background: rgba(100, 255, 218, 0.12); color: var(--text-accent); border: 1px solid rgba(100, 255, 218, 0.25);">Live Demo</span>
                     </div>
                     <h3>Drawing Recognition AI</h3>
                     <p>
                         A program that guesses what you're drawing in real-time, displaying 
                         confidence percentages as you sketch. Built entirely from scratch with 
-                        NumPy — no deep learning frameworks. Try it live in the browser, or 
-                        check out the source code.
+                        NumPy — no deep learning frameworks. Currently supports 10 drawing 
+                        categories — the goal is to make it browser-based so visitors can try it live.
                     </p>
                     <div class="metrics">
                         <div class="metric">
@@ -626,6 +646,19 @@
         }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
 
         document.querySelectorAll('.featured-item').forEach(item => obs.observe(item));
+
+        // Mouse spotlight effect
+        const spotlight = document.createElement('div');
+        spotlight.classList.add('spotlight');
+        document.body.appendChild(spotlight);
+        document.addEventListener('mousemove', function(e) {
+            spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
+            spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
+            if (!spotlight.classList.contains('active')) spotlight.classList.add('active');
+        });
+        document.addEventListener('mouseleave', function() {
+            spotlight.classList.remove('active');
+        });
     </script>
 </body>
 </html>
